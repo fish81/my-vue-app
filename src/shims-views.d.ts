@@ -1,0 +1,1 @@
+declare module '../views/NotFoundView.vue'; 
