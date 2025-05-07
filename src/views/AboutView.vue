@@ -1,15 +1,15 @@
+<script setup lang="ts">
+</script>
+
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h2>关于我们</h2>
+    <p>我们是一家专注于提供优质服务的公司</p>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<style scoped>
+.about {
+  padding: 20px;
 }
-</style>
+</style> 

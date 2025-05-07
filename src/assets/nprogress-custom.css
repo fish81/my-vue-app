@@ -1,0 +1,11 @@
+/* src/assets/nprogress-custom.css */
+#nprogress .bar {
+    background: linear-gradient(120deg, #2d60ec, #3ccfda) !important; /* 动态渐变背景 */
+    animation: animate 2s linear infinite;
+    height: 2px !important;         /* 进度条高度 */
+  }
+  
+  #nprogress .peg {
+    box-shadow: 0 0 10px #1677ff, 0 0 5px #1677ff !important;
+  }
+  
