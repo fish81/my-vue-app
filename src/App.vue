@@ -91,7 +91,7 @@ const menuItems = [
 }
 
 .nav-link.router-link-active {
-  /* background-color: rgba(255, 255, 255, 0.2); */
+  color: #409eff;
 }
 
 .content {
