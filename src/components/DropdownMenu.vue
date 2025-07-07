@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 interface MenuItem {
   label: string
@@ -12,13 +12,47 @@ const props = defineProps<{
 }>()
 
 const isOpen = ref(false)
+const isMobile = ref(false)
+
+// 检查是否为移动端
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+// 点击外部关闭菜单
+const handleClickOutside = (event: MouseEvent) => {
+  const dropdown = document.querySelector('.dropdown')
+  if (dropdown && !dropdown.contains(event.target as Node)) {
+    isOpen.value = false
+  }
+}
+
+// 切换菜单状态
+const toggleMenu = () => {
+  if (isMobile.value) {
+    isOpen.value = !isOpen.value
+  }
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
   <div 
-    class="dropdown" 
-    @mouseenter="isOpen = true"
-    @mouseleave="isOpen = false"
+    class="dropdown"
+    :class="{ 'is-mobile': isMobile }"
+    @mouseenter="!isMobile && (isOpen = true)"
+    @mouseleave="!isMobile && (isOpen = false)"
+    @click="toggleMenu"
   >
     <div class="dropdown-trigger">
       <slot name="trigger">
@@ -169,5 +203,59 @@ const isOpen = ref(false)
 .dropdown-leave-to {
   opacity: 0;
   transform: translate(-50%, -10px);
+}
+
+/* 移动端样式 */
+@media (max-width: 768px) {
+  .dropdown {
+    width: 100%;
+  }
+
+  .dropdown-trigger {
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .dropdown-menu {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  .dropdown-item {
+    border-bottom: 1px solid #eee;
+  }
+
+  .dropdown-link {
+    padding: 12px 20px;
+  }
+
+  .submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    background: #f5f7fa;
+    margin-left: 20px;
+    border-radius: 0;
+  }
+
+  .submenu-item {
+    padding: 12px 20px;
+  }
+
+  /* 移动端动画 */
+  .dropdown-enter-from,
+  .dropdown-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 </style> 

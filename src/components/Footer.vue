@@ -57,7 +57,7 @@
   
   .footer-logo {
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: normal;
     letter-spacing: 2px;
     margin-bottom: 8px;
   }

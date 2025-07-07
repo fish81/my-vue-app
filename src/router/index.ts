@@ -11,7 +11,10 @@ const router = createRouter({
       name: 'home',
       components: {
         default: HomeView,
-        // footer: () => import('../components/Footer.vue')
+        footer: () => import('../components/Footer.vue')
+      },
+      meta: {
+        title: '首页'
       }
     },
     {
@@ -20,6 +23,9 @@ const router = createRouter({
       components: {
         default: () => import('../views/AboutView.vue'),
         // footer: () => import('../components/Footer.vue')
+      },
+      meta: {
+        title: '关于我们'
       }
     },
     {
@@ -28,6 +34,17 @@ const router = createRouter({
       components: {
         default: () => import('../views/ProductsView.vue'),
         // footer: () => import('../components/Footer.vue')
+      },
+      meta: {
+        title: '产品详情'
+      }
+    },
+    {
+      path: '/console',
+      name: 'console',
+      component: () => import('../views/ConsoleView.vue'),
+      meta: {
+        title: '控制台'
       }
     },
     {
@@ -36,18 +53,27 @@ const router = createRouter({
       components: {
         default: () => import('../views/ContactView.vue'),
         // footer: () => import('../components/Footer.vue')
+      },
+      meta: {
+        title: '联系我们'
       }
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
-      component: () => import('../views/NotFoundView.vue')
+      component: () => import('../views/NotFoundView.vue'),
+      meta: {
+        title: '页面未找到'
+      }
     }
   ],
 })
 
 // 路由切换开始时启动进度条
 router.beforeEach((to, from, next) => {
+  // 设置页面标题
+  document.title = `梦之鱼 - ${to.meta.title}`
+  
   NProgress.start()
   if (to.name === 'products') {
     setTimeout(() => {
